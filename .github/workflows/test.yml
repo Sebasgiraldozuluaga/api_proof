@@ -1,33 +1,21 @@
-name: 🚀 Test FastAPI API
+name: 🚀 Deploy FastAPI to Render
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main  # Se ejecuta solo cuando se hace push a la rama principal
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: 🔄 Trigger Deploy on Render
+        run: |
+          curl -X POST "https://api.render.com/deploy/suma" \
+          -H "Authorization: Bearer ${{ secrets.1caa6388c219896da6e48cab14ebaf9d }}"
 
-    - name: Cache pip dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    
-    - name: Install dependencies
-      run: pip install -r requirements.txt
 
-    - name: Start FastAPI server
-      run: python -m uvicorn main:app --reload
-
-    - name: Run tests
-      run: pytest --maxfail=5 --disable-warnings -v
