@@ -15,7 +15,7 @@ jobs:
 
       - name: 🔄 Trigger Deploy on Render
         run: |
-          curl -X POST "https://api.render.com/deploy/suma" \
+          curl -X POST "https://api.render.com/deploy/srv-cv33fg8gph6c73cmgigg?key=-qW_mRZ6yog" \
           -H "Authorization: Bearer ${{ secrets.1caa6388c219896da6e48cab14ebaf9d }}"
 
 
